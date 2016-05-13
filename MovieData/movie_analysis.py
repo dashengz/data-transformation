@@ -116,11 +116,12 @@ def add_partial_list(partial, companies):
     for mov in partial:
         movie_url = "http://api.themoviedb.org/3/movie/" + str(mov) + "?api_key=" + api_key
         movie_json = parse_json(movie_url)
-        company = movie_json['production_companies'][0]["name"]
-        if company in companies:
-            companies[company] += 1
-        else:
-            companies[company] = 1
+        for company in movie_json['production_companies']:
+            name = company["name"]
+            if name in companies:
+                companies[name] += 1
+            else:
+                companies[name] = 1
 
 
 # Need to do the query with intervals so as to prevent HTTP Error 429
